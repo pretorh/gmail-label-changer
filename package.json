@@ -1,0 +1,14 @@
+{
+  "name": "gmail-utils",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pretorh/gmail-utils.git"
+  },
+  "author": "Hendri Pretorius",
+  "bugs": {
+    "url": "https://github.com/pretorh/gmail-utils/issues"
+  },
+  "homepage": "https://github.com/pretorh/gmail-utils#readme"
+}
