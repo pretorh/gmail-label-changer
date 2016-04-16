@@ -11,4 +11,8 @@ if (command === 'save-auth') {
     result = gmail.auth('client_secret.json', SCOPES, 'credentials.json');
 }
 
+if (command === undefined || command === 'save-auth') {
+    result = result.then(gmail.auth.mapExpirationDetailsSync);
+}
+
 result.done(console.log, console.error);
