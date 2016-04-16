@@ -13,6 +13,11 @@ if (command === 'save-auth') {
 
 if (command === undefined || command === 'save-auth') {
     result = result.then(gmail.auth.mapExpirationDetailsSync);
+} else if (command === 'labels') {
+    result = result.then(gmail.labels);
+    if (argument) {
+        result = result.then(gmail.labels.resolveByName(argument));
+    }
 }
 
 result.done(console.log, console.error);
