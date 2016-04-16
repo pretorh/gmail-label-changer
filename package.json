@@ -13,6 +13,7 @@
   "homepage": "https://github.com/pretorh/gmail-utils#readme",
   "dependencies": {
     "google-auth-library": "0.9.7",
-    "googleapis": "5.0.0"
+    "googleapis": "5.0.0",
+    "q": "1.4.1"
   }
 }
