@@ -3,6 +3,7 @@ var SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 
 var command = process.argv[2];
 var argument = process.argv[3];
+var argument2 = process.argv[4];
 
 var result;
 if (command === 'save-auth') {
@@ -34,6 +35,8 @@ if (command === undefined || command === 'save-auth') {
         .then(function(label) {
             return gmail.threads.onLabel(auth, label.id);
         });
+    if (argument2 === 'ids')
+        result = result.then(gmail.threads.mapIds);
 }
 
 result.done(console.log, console.error);
