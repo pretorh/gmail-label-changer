@@ -18,6 +18,10 @@ if (command === undefined || command === 'save-auth') {
     if (argument) {
         result = result.then(gmail.labels.resolveByName(argument));
     }
+} else if (command === 'threads') {
+    result = result.then(function(auth) {
+        return gmail.threads(auth, { q: argument });
+    });
 }
 
 result.done(console.log, console.error);
