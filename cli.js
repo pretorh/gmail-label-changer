@@ -1,5 +1,8 @@
 var gmail = require('./');
-var SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
+var SCOPES = [
+    'https://www.googleapis.com/auth/gmail.readonly',
+    'https://www.googleapis.com/auth/gmail.modify',
+];
 
 var command = process.argv[2];
 var argument = process.argv[3];

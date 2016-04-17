@@ -1,0 +1,41 @@
+var gmail = require('../');
+var Q = require('q');
+var SCOPES = [
+    'https://www.googleapis.com/auth/gmail.readonly',
+    'https://www.googleapis.com/auth/gmail.modify',
+];
+
+var cli = {
+    source: process.argv[2],
+    dest: process.argv[3],
+}
+
+var auth;
+
+var authorize = gmail
+    .auth('client_secret.json', SCOPES, 'credentials.json')
+    .tap(function(a) {
+        auth = a;
+    });
+
+var labels = authorize.then(gmail.labels);
+var resolveSource = labels.then(gmail.labels.resolveByName(cli.source));
+var resolveDest = labels.then(gmail.labels.resolveByName(cli.dest));
+var resolveThreads = resolveSource
+    .then(function(label) {
+        return gmail.threads.onLabel(auth, label.id);
+    })
+    .then(gmail.threads.mapIds);
+
+result = Q.all([resolveSource, resolveDest, resolveThreads])
+    .spread(bulkChangeLabels)
+    .done(console.log);
+
+function bulkChangeLabels(source, dest, threadIds) {
+    var add = [ dest.id ];
+    var remove = [ source.id ];
+    var jobs = threadIds.map(function(id) {
+        return gmail.threads.changeLabels(auth, id, add, remove);
+    });
+    return Q.all(jobs);
+}
