@@ -35,7 +35,9 @@ function bulkChangeLabels(source, dest, threadIds) {
     var add = [ dest.id ];
     var remove = [ source.id ];
     var jobs = threadIds.map(function(id) {
-        return gmail.threads.changeLabels(auth, id, add, remove);
+        return gmail.threads.changeLabels(auth, id, add, remove)
+            .get(0)
+            .get('id');
     });
     return Q.all(jobs);
 }
