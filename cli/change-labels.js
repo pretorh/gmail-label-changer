@@ -40,9 +40,9 @@ result = Q.all([resolveSource, resolveDest, resolveThreads])
     .spread(bulkChangeLabels)
     .done(console.log);
 
-function bulkChangeLabels(source, dest, threadIds) {
+function bulkChangeLabels(sources, dest, threadIds) {
     var add = [ dest.id ];
-    var remove = [ source.id ];
+    var remove = sources.map(function(s) { return s.id; });
     var jobs = threadIds.map(function(id) {
         return gmail.threads.changeLabels(auth, id, add, remove)
             .get(0)
