@@ -24,7 +24,15 @@ var resolveSource = labels.then(gmail.labels.resolveByName(cli.source));
 var resolveDest = labels.then(gmail.labels.resolveByName(cli.dest));
 var resolveThreads = resolveSource
     .then(function(label) {
-        return gmail.threads.onLabel(auth, label.id);
+        return label.map(function(l) {
+            return gmail.threads.onLabel(auth, l.id);
+        });
+    })
+    .then(Q.all)
+    .then(function(arrayOfArrays) {
+        return arrayOfArrays.reduce(function(array, pre) {
+            return pre.concat(array);
+        }, []);
     })
     .then(gmail.threads.mapIds);
 
