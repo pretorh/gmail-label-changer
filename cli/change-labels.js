@@ -5,10 +5,11 @@ var SCOPES = [
     'https://www.googleapis.com/auth/gmail.modify',
 ];
 
-var cli = {
-    source: process.argv[2],
-    dest: process.argv[3],
-}
+var args = process.argv.splice(2);
+
+var cli = {};
+cli.dest = args.splice(-1)[0];
+cli.source = args;
 
 var auth;
 
