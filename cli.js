@@ -2,11 +2,14 @@ var gmail = require('./');
 var SCOPES = [
     'https://www.googleapis.com/auth/gmail.readonly',
     'https://www.googleapis.com/auth/gmail.modify',
+    'https://www.googleapis.com/auth/gmail.compose',
 ];
 
 var command = process.argv[2];
 var argument = process.argv[3];
 var argument2 = process.argv[4];
+var argument3 = process.argv[5];
+var argument4 = process.argv[6];
 
 var result;
 if (command === 'save-auth') {
@@ -40,6 +43,18 @@ if (command === undefined || command === 'save-auth') {
         });
     if (argument2 === 'ids')
         result = result.then(gmail.threads.mapIds);
+} else if (command === "send") {
+    result = result
+        .then(auth => {
+            return {
+                auth: auth,
+                from: argument,
+                to: argument2,
+                subject: argument3,
+                text: argument4,
+            };
+        })
+        .then(gmail.compose.send)
 }
 
 result.done(console.log, console.error);

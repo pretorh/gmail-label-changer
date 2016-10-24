@@ -34,3 +34,9 @@ Arguments:
 - threads-on-label
   - List all threads on a matching label (1st argument)
   - If 2nd argument is `ids` then only list the thread ids
+- send
+  - send an email. arguments:
+    - from
+    - to
+    - subject
+    - text
